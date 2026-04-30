@@ -95,6 +95,18 @@
     # Allow unfree packages
     nixpkgs.config.allowUnfree = true;
 
+    # Enable the Starship prompt.
+    programs.starship = {
+      enable = true;
+      settings = {
+        add_newline = false;
+        character = {
+          success_symbol = "[➜](bold green)";
+          error_symbol = "[➜](bold red)";
+        };
+      };
+    };
+
     # List packages installed in system profile. To search, run:
     # $ nix search wget
     environment.systemPackages = with pkgs; [
@@ -105,8 +117,11 @@
       networkmanagerapplet
       obs-studio
 
+      nerd-fonts.fira-code
+      starship
+
       self.packages.${system}.git
-    
+      
     ];
 
     # Some programs need SUID wrappers, can be configured further or are
