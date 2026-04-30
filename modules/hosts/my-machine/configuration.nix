@@ -102,10 +102,11 @@
     #  wget
       gnomeExtensions.clipboard-history
       vscode
-      
       networkmanagerapplet
       obs-studio
 
+      self.packages.${system}.git
+    
     ];
 
     # Some programs need SUID wrappers, can be configured further or are
