@@ -4,6 +4,7 @@
     imports =
       [ # Include the results of the hardware scan.
         self.nixosModules.myMachineHardware
+        self.nixosModules.mainFeatures
       ];
 
     # Bootloader.
@@ -94,23 +95,11 @@
 
     # Allow unfree packages
     nixpkgs.config.allowUnfree = true;
-
-    # Enable the Starship prompt.
-    programs.starship = {
-      enable = true;
-      settings = {
-        add_newline = false;
-        character = {
-          success_symbol = "[➜](bold green)";
-          error_symbol = "[➜](bold red)";
-        };
-      };
-    };
-
+   
     # List packages installed in system profile. To search, run:
     # $ nix search wget
     environment.systemPackages = with pkgs; [
-      vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     #  wget
       gnomeExtensions.clipboard-history
       vscode
@@ -118,10 +107,6 @@
       obs-studio
 
       nerd-fonts.fira-code
-      starship
-
-      self.packages.${system}.git
-      
     ];
 
     # Some programs need SUID wrappers, can be configured further or are
@@ -135,6 +120,13 @@
     # List services that you want to enable:
     services.resolved.enable = true;
     services.cloudflare-warp.enable = true;
+
+    # services.ttyd = {
+    #   enable = true;
+    #   writeable = true; # Permite digitar comandos (se false, é apenas visualização)
+    #   port = 7681;      # Porta padrão
+    #   interface = "0.0.0.0"; # "localhost" para apenas acesso local ou "0.0.0.0" para rede
+    # };
 
     # Enable the OpenSSH daemon.
     # services.openssh.enable = true;
