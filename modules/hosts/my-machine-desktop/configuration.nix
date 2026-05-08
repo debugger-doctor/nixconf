@@ -121,13 +121,6 @@
     services.resolved.enable = true;
     services.cloudflare-warp.enable = true;
 
-    # services.ttyd = {
-    #   enable = true;
-    #   writeable = true; # Permite digitar comandos (se false, é apenas visualização)
-    #   port = 7681;      # Porta padrão
-    #   interface = "0.0.0.0"; # "localhost" para apenas acesso local ou "0.0.0.0" para rede
-    # };
-
     # Enable the OpenSSH daemon.
     # services.openssh.enable = true;
 

@@ -14,10 +14,19 @@
 
       package = pkgs.niri;
 
+      disableConfigValidation = true;
+
       settings = {
+        prefer-no-csd = true;
+        hotkey-overlay.skip-at-startup = { };
+        overview.zoom = 0.25;
+
         spawn-at-startup = [ (lib.getExe self'.packages.myNoctalia) ];
+
         input = {
           keyboard = { xkb.layout = "br"; };
+          focus-follows-mouse = { };
+          warp-mouse-to-focus = { };
           # touchpad = {
           #   tap = { };
           #   natural-scroll = { };
@@ -28,17 +37,31 @@
           
         ];
 
-        prefer-no-csd = true;
+        layout = {
+          focus-ring.off = { };
+          border = {
+            width = 4;
+          };
+        };
+
         
         binds = {
           "Mod+Space".show-hotkey-overlay = [ ];
           "Mod+Return".spawn-sh = lib.getExe self'.packages.myKittyTerminal;
           "Mod+Q".close-window = [ ];
 
+
+          "Print".screenshot = { };
+          "Ctrl+Print".screenshot-screen = { };
+          "Alt+Print".screenshot-window = { };
+
+
           "Mod+D".spawn = [ (lib.getExe self'.packages.myNoctalia) "ipc" "call" "launcher" "toggle" ];
           "Mod+S".spawn = [ (lib.getExe self'.packages.myNoctalia) "ipc" "call" "settings" "toggle" ];
           "Mod+L".spawn = [ (lib.getExe self'.packages.myNoctalia) "ipc" "call" "lockScreen" "lock" ];
+          "Mod+W".spawn = [ (lib.getExe self'.packages.myNoctalia) "ipc" "call" "wallpaper" "toggle" ];
           "Mod+A".toggle-overview = [ ];
+
 
           "Mod+F".maximize-column = [ ];
           "Mod+Shift+F".fullscreen-window = [ ];
@@ -46,20 +69,31 @@
           "Mod+C".center-column = [ ];
           "Mod+Shift+V".switch-focus-between-floating-and-tiling = [ ];
 
+
           "Mod+O".toggle-window-rule-opacity = [ ]; 
           "Mod+Shift+Q".quit = [ ];
           "Mod+Comma".consume-window-into-column = [ ];
           "Mod+Period".expel-window-from-column = [ ];
+
           
           "Mod+Left".focus-column-left = [ ];
           "Mod+Right".focus-column-right = [ ];
           "Mod+Up".focus-window-up = [ ];
           "Mod+Down".focus-window-down = [ ];
 
+
           "Mod+Shift+Left".move-column-left = [ ];
           "Mod+Shift+Right".move-column-right = [ ];
           "Mod+Shift+Up".move-window-up = [ ];
           "Mod+Shift+Down".move-window-down = [ ];
+          
+
+          "Mod+Ctrl+Left".set-window-width = [  "-5%" ];
+          "Mod+Ctrl+Right".set-window-width = [ "+5%" ];
+          "Mod+Ctrl+Up".set-window-height = [ "-5%" ];
+          "Mod+Ctrl+Down".set-window-height = [ "+5%" ];
+
+          "Mod+R".switch-preset-column-width = [ ];
  
           # Bindings to switch to workspaces 0-9.
           "Mod+Alt+Up".focus-workspace-up = [ ];
@@ -75,6 +109,10 @@
           "Mod+8".focus-workspace = 8;
           "Mod+9".focus-workspace = 9;
         };
+
+        extraConfig = ''
+          include "/home/doctor/.config/niri/noctalia.kdl"
+        '';
       };
     };
   };

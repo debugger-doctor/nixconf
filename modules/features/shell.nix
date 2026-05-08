@@ -14,8 +14,7 @@
       autosuggestions.enable = true;
       syntaxHighlighting.enable = true;
       
-      # Garante que o Zsh use o Starship
-      promptInit = ""; 
+      promptInit = ""; # Force Zsh to use the Starship prompt instead of the default one.
 
       # ohMyZsh = {
       #   enable = true;
@@ -34,5 +33,13 @@
         };
       };
     };
+
+    # services.ttyd = {
+    #   enable = true;
+    #   writeable = true; # Permite digitar comandos (se false, é apenas visualização)
+    #   port = 7681;      # Porta padrão
+    #   interface = "0.0.0.0"; # "localhost" para apenas acesso local ou "0.0.0.0" para rede
+    # };
+
   };
 }
