@@ -6,6 +6,7 @@
 
     environment.systemPackages = with pkgs; [
       starship
+      nerd-fonts.fira-code
     ];
 
     programs.zsh = { # Enable Zsh as the default shell.
