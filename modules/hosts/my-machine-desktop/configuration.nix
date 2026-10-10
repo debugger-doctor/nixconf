@@ -5,6 +5,7 @@
       [ # Include the results of the hardware scan.
         self.nixosModules.myMachineHardware
         self.nixosModules.mainFeatures
+        self.nixosModules.mainPackages
       ];
 
     # Bootloader.
@@ -101,12 +102,6 @@
     environment.systemPackages = with pkgs; [
     #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     #  wget
-      gnomeExtensions.clipboard-history
-      vscode
-      networkmanagerapplet
-      obs-studio
-
-      nerd-fonts.fira-code
     ];
 
     # Some programs need SUID wrappers, can be configured further or are

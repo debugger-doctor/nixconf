@@ -1,6 +1,6 @@
-{ self, inputs, ... }: {
+{ inputs, ... }: {
 
-  perSystem = { pkgs, lib, ... }: {
+  perSystem = { pkgs, ... }: {
     packages.myKittyTerminal = inputs.wrapper-modules.wrappers.kitty.wrap {
       inherit pkgs;
 

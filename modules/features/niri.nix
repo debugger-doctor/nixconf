@@ -1,6 +1,6 @@
 { self, inputs, ... }: {
 
-  flake.nixosModules.niri = { pkgs, lib, ... }: {
+  flake.nixosModules.niri = { pkgs, ... }: {
     programs.niri = {
       enable = true;
       package = self.packages.${pkgs.stdenv.hostPlatform.system}.myNiri;
@@ -18,7 +18,7 @@
 
       settings = {
         prefer-no-csd = true;
-        hotkey-overlay.skip-at-startup = { };
+        hotkey-overlay.skip-at-startup = [ ];
         overview.zoom = 0.25;
 
         spawn-at-startup = [ (lib.getExe self'.packages.myNoctalia) ];
@@ -26,25 +26,28 @@
         input = {
           keyboard = { xkb.layout = "br"; };
           focus-follows-mouse = { };
-          warp-mouse-to-focus = { };
           # touchpad = {
           #   tap = { };
           #   natural-scroll = { };
           # };
+          warp-mouse-to-focus = { };
         };
-
-        window-rules = [
-          
-        ];
-
         layout = {
-          focus-ring.off = { };
+          focus-ring.off = [ ];
           border = {
             width = 4;
           };
         };
-
-        
+        window-rules = [
+          {
+            matches = [ { app-id = ".*"; } ];
+            draw-border-with-background = false;
+          }
+          {
+            matches = [ { app-id = "^code$"; } ];
+            opacity = 0.90;
+          }
+        ];
         binds = {
           "Mod+Space".show-hotkey-overlay = [ ];
           "Mod+Return".spawn-sh = lib.getExe self'.packages.myKittyTerminal;
@@ -70,12 +73,12 @@
           "Mod+Shift+V".switch-focus-between-floating-and-tiling = [ ];
 
 
-          "Mod+O".toggle-window-rule-opacity = [ ]; 
+          "Mod+O".toggle-window-rule-opacity = [ ];
           "Mod+Shift+Q".quit = [ ];
           "Mod+Comma".consume-window-into-column = [ ];
           "Mod+Period".expel-window-from-column = [ ];
 
-          
+
           "Mod+Left".focus-column-left = [ ];
           "Mod+Right".focus-column-right = [ ];
           "Mod+Up".focus-window-up = [ ];
@@ -86,7 +89,7 @@
           "Mod+Shift+Right".move-column-right = [ ];
           "Mod+Shift+Up".move-window-up = [ ];
           "Mod+Shift+Down".move-window-down = [ ];
-          
+
 
           "Mod+Ctrl+Left".set-window-width = [  "-5%" ];
           "Mod+Ctrl+Right".set-window-width = [ "+5%" ];
@@ -94,7 +97,7 @@
           "Mod+Ctrl+Down".set-window-height = [ "+5%" ];
 
           "Mod+R".switch-preset-column-width = [ ];
- 
+
           # Bindings to switch to workspaces 0-9.
           "Mod+Alt+Up".focus-workspace-up = [ ];
           "Mod+Alt+Down".focus-workspace-down = [ ];

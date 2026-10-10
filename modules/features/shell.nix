@@ -1,6 +1,6 @@
-{ self, inputs, ... }: {
+{ ... }: {
   
-  flake.nixosModules.myCustomShell = { config, pkgs, lib, ... }: {
+  flake.nixosModules.myCustomShell = { pkgs, ... }: {
 
     users.users.doctor.shell = pkgs.zsh;
 
