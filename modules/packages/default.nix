@@ -4,6 +4,7 @@
 
     imports = [
       self.nixosModules.develop
+      self.nixosModules.myNeovim
     ];
 
     environment.systemPackages = with pkgs; [
