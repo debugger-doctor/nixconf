@@ -3,7 +3,15 @@
   perSystem = { pkgs, system, ... }: {
     packages.myNoctalia =
     let
-      noctaliaFixed = pkgs.noctalia-shell.overrideAttrs (oldAttrs: {
+      noctaliaQsPatched = pkgs.noctalia-qs.overrideAttrs (old: {
+        patches = (old.patches or [ ]) ++ [ ./noctalia-qs-qt612.patch ];
+      });
+
+      noctaliaShellWithQs = pkgs.noctalia-shell.override {
+        noctalia-qs = noctaliaQsPatched;
+      };
+
+      noctaliaFixed = noctaliaShellWithQs.overrideAttrs (oldAttrs: {
         postPatch = (oldAttrs.postPatch or "") + ''
           find . -name "template-apply.sh" -exec sed -i '/KITTY_CONF=.*config\/kitty/,/fi/d' {} +
           find . -type f -exec sed -i 's/kitty +runpy.*//g' {} +

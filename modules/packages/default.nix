@@ -7,6 +7,14 @@
       self.nixosModules.myNeovim
     ];
 
+    nixpkgs.overlays = [
+      (final: prev: {
+        noctalia-qs = prev.noctalia-qs.overrideAttrs (old: {
+          patches = (old.patches or [ ]) ++ [ ./noctalia-qs-qt612.patch ];
+        });
+      })
+    ];
+
     environment.systemPackages = with pkgs; [
       networkmanagerapplet
       obs-studio

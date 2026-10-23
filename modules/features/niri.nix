@@ -45,7 +45,7 @@
           }
           {
             matches = [ { app-id = "^code$"; } ];
-            opacity = 0.90;
+            opacity = 0.95;
           }
         ];
         binds = {
