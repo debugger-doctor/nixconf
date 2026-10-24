@@ -17,8 +17,8 @@
         listen_on = "unix:@kitty";
 
         shell_integration = "enabled no-cursor";
-        cursor_shape = "block";
-
+        cursor_shape = "beam";
+        cursor_beam_thickness = "1.5";
         cursor_trail = 3;
 
         shell = "/run/current-system/sw/bin/zsh --login";

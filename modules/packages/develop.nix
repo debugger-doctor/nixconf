@@ -20,10 +20,15 @@
 
       vscode-fhs
       
-      # C / C++
+      # C / C++ (Compilador, Build, Formatador, Linter, LSP, Debugger e Profiler)
       gcc
       gdb 
       gnumake
+      cmake
+      ninja
+      clang-tools # clangd (LSP), clang-format (formatador), clang-tidy (linter)
+      cppcheck    # linter / análise estática
+      valgrind    # debugger de memória e profiling
 
       # Rust (Compilador, Gerenciador, Formatador, Linter, LSP e Debugger)
       rustc
@@ -42,9 +47,26 @@
       golangci-lint
       gofumpt
 
-      # Lua
+      # Lua (Interpretador, Gerenciador, Formatador, Linter e LSP)
       lua5_4
       lua54Packages.luarocks
+      stylua                  # formatador
+      lua-language-server     # LSP
+      lua54Packages.luacheck  # linter
+      selene                  # linter
+
+      # Erlang (Compilador, Build, Formatador, Linter, LSP e Debugger)
+      beamPackages.erlang            # compilador erlc, runtime erl, dialyzer e debugger OTP
+      beamPackages.rebar3            # gerenciador de build e dependências
+      beamPackages.erlfmt            # formatador de código
+      beamPackages.elvis-erlang      # linter de estilo
+      erlang-language-platform       # LSP moderno (elp)
+
+      # Elixir (Compilador, Build/Gerenciador, Formatador, LSP e Debugger)
+      beamPackages.elixir            # compilador, iex (com dbg/pry), mix e mix format
+      beamPackages.hex               # gerenciador de pacotes Hex
+      beamPackages.elixir-ls         # LSP e DAP (debugger adapter)
+      beamPackages.expert            # LSP moderno (Next LS + Lexical)
 
       arduino-cli
       avrdude

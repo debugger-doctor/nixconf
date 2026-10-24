@@ -15,6 +15,16 @@
       autosuggestions.enable = true;
       syntaxHighlighting.enable = true;
       
+      interactiveShellInit = ''
+        # Configura o cursor como barra vertical (beam) em todos os terminais (GNOME Console, Ptyxis, etc.)
+        _set_cursor_beam() {
+          printf '\e[5 q'
+        }
+        autoload -Uz add-zsh-hook
+        add-zsh-hook precmd _set_cursor_beam
+        zle -N zle-line-init _set_cursor_beam
+      '';
+
       promptInit = ""; # Force Zsh to use the Starship prompt instead of the default one.
 
       # ohMyZsh = {

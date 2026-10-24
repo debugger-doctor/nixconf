@@ -21,7 +21,11 @@
         hotkey-overlay.skip-at-startup = [ ];
         overview.zoom = 0.25;
 
-        spawn-at-startup = [ (lib.getExe self'.packages.myNoctalia) ];
+        spawn-at-startup = [
+          [ "systemctl" "--user" "import-environment" "WAYLAND_DISPLAY" "XDG_CURRENT_DESKTOP" ]
+          [ "dbus-update-activation-environment" "--systemd" "WAYLAND_DISPLAY" "XDG_CURRENT_DESKTOP" ]
+          [ (lib.getExe self'.packages.myNoctalia) ]
+        ];
 
         input = {
           keyboard = { xkb.layout = "br"; };
@@ -46,6 +50,23 @@
           {
             matches = [ { app-id = "^code$"; } ];
             opacity = 0.95;
+          }
+          # Regras para janelas do Noctalia / Quickshell flutuarem com cantos arredondados no Niri
+          {
+            matches = [ 
+              { app-id = "^(dev\\.noctalia\\.noctalia-qs|noctalia-qs|quickshell|qs|dev\\.noctalia\\.Noctalia)$"; }
+            ];
+            open-floating = true;
+            geometry-corner-radius = 12.0;
+            clip-to-geometry = true;
+          }
+          {
+            matches = [ 
+              { title = "^Noctalia.*$"; }
+            ];
+            open-floating = true;
+            geometry-corner-radius = 12.0;
+            clip-to-geometry = true;
           }
         ];
         binds = {

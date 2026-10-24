@@ -22,7 +22,7 @@
       self.packages.${stdenv.hostPlatform.system}.git
       self.packages.${stdenv.hostPlatform.system}.myBtop
       self.packages.${stdenv.hostPlatform.system}.myKittyTerminal
-      # self.packages.${stdenv.hostPlatform.system}.myNoctalia
+      self.packages.${stdenv.hostPlatform.system}.myNoctalia
     ];
 
   };

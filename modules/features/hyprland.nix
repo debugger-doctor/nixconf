@@ -156,7 +156,7 @@
       -------------------
       ---- AUTOSTART ----
       -------------------
-      local terminal = "${lib.getExe self.packages.${pkgs.stdenv.hostPlatform.system}.myKittyTerminal}"
+      local terminal = "kitty"
       local noctalia = "${lib.getExe self.packages.${pkgs.stdenv.hostPlatform.system}.myNoctalia}"
 
       hl.on("hyprland.start", function ()
@@ -183,22 +183,62 @@
       -- Atalhos do Noctalia Shell
       hl.bind(mainMod .. " + D", hl.dsp.exec_cmd(noctalia .. " ipc call launcher toggle"))
       hl.bind(mainMod .. " + S", hl.dsp.exec_cmd(noctalia .. " ipc call settings toggle"))
-      hl.bind(mainMod .. " + L", hl.dsp.exec_cmd(noctalia .. " ipc call lockScreen lock"))
+      hl.bind(mainMod .. " + Escape", hl.dsp.exec_cmd(noctalia .. " ipc call lockScreen lock"))
+      hl.bind(mainMod .. " + ALT + L", hl.dsp.exec_cmd(noctalia .. " ipc call lockScreen lock"))
       hl.bind(mainMod .. " + W", hl.dsp.exec_cmd(noctalia .. " ipc call wallpaper toggle"))
-      hl.bind(mainMod .. " + A", hl.dsp.exec_cmd(noctalia .. " ipc call overview toggle"))
+      hl.bind(mainMod .. " + A", hl.dsp.exec_cmd(noctalia .. " ipc call launcher windows"))
 
-      -- Movimentação de Foco
+      -- Movimentação de Foco (Setas e Vim Keys HJKL)
       hl.bind(mainMod .. " + Left",  hl.dsp.focus({ direction = "left" }))
       hl.bind(mainMod .. " + Right", hl.dsp.focus({ direction = "right" }))
       hl.bind(mainMod .. " + Up",    hl.dsp.focus({ direction = "up" }))
       hl.bind(mainMod .. " + Down",  hl.dsp.focus({ direction = "down" }))
+      hl.bind(mainMod .. " + H",     hl.dsp.focus({ direction = "left" }))
+      hl.bind(mainMod .. " + L",     hl.dsp.focus({ direction = "right" }))
+      hl.bind(mainMod .. " + K",     hl.dsp.focus({ direction = "up" }))
+      hl.bind(mainMod .. " + J",     hl.dsp.focus({ direction = "down" }))
+
+      -- Troca de Lugar de Janelas / Swap (SUPER + SHIFT + Setas / HJKL)
+      hl.bind(mainMod .. " + SHIFT + Left",  hl.dsp.window.move({ direction = "left" }))
+      hl.bind(mainMod .. " + SHIFT + Right", hl.dsp.window.move({ direction = "right" }))
+      hl.bind(mainMod .. " + SHIFT + Up",    hl.dsp.window.move({ direction = "up" }))
+      hl.bind(mainMod .. " + SHIFT + Down",  hl.dsp.window.move({ direction = "down" }))
+      hl.bind(mainMod .. " + SHIFT + H",     hl.dsp.window.move({ direction = "left" }))
+      hl.bind(mainMod .. " + SHIFT + L",     hl.dsp.window.move({ direction = "right" }))
+      hl.bind(mainMod .. " + SHIFT + K",     hl.dsp.window.move({ direction = "up" }))
+      hl.bind(mainMod .. " + SHIFT + J",     hl.dsp.window.move({ direction = "down" }))
+
+      -- Arrastar e Redimensionar Janelas com o Mouse
+      hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
+      hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
+
+      -- Navegação entre Workspaces relativos (+1 e -1)
+      hl.bind(mainMod .. " + bracketleft",  hl.dsp.focus({ workspace = "e-1" }))
+      hl.bind(mainMod .. " + bracketright", hl.dsp.focus({ workspace = "e+1" }))
+      hl.bind(mainMod .. " + Page_Up",      hl.dsp.focus({ workspace = "e-1" }))
+      hl.bind(mainMod .. " + Page_Down",    hl.dsp.focus({ workspace = "e+1" }))
+      hl.bind(mainMod .. " + mouse_down",   hl.dsp.focus({ workspace = "e+1" }))
+      hl.bind(mainMod .. " + mouse_up",     hl.dsp.focus({ workspace = "e-1" }))
+
+      -- Mover Janela Ativa para Workspace relativo (+1 e -1)
+      hl.bind(mainMod .. " + SHIFT + bracketleft",  hl.dsp.window.move({ workspace = "e-1" }))
+      hl.bind(mainMod .. " + SHIFT + bracketright", hl.dsp.window.move({ workspace = "e+1" }))
+      hl.bind(mainMod .. " + SHIFT + Page_Up",      hl.dsp.window.move({ workspace = "e-1" }))
+      hl.bind(mainMod .. " + SHIFT + Page_Down",    hl.dsp.window.move({ workspace = "e+1" }))
+      hl.bind(mainMod .. " + SHIFT + mouse_down",   hl.dsp.window.move({ workspace = "e+1" }))
+      hl.bind(mainMod .. " + SHIFT + mouse_up",     hl.dsp.window.move({ workspace = "e-1" }))
 
       -- Workspaces 1 a 9
       for i = 1, 9 do
-          hl.bind(mainMod .. " + " .. i,         hl.dsp.focus({ workspace = i }))
-          hl.bind(mainMod .. " + SHIFT + " .. i, hl.dsp.window.move({ workspace = i }))
+          hl.bind(mainMod .. " + " .. i,                hl.dsp.focus({ workspace = i }))
+          hl.bind(mainMod .. " + SHIFT + " .. i,        hl.dsp.window.move({ workspace = i }))
+          hl.bind(mainMod .. " + CTRL + " .. i,         hl.dsp.window.move({ workspace = i, silent = true }))
       end
     '';
+
+    systemd.user.tmpfiles.rules = [
+      "L+ %h/.config/hypr/hyprland.lua - - - - /etc/hypr/hyprland.lua"
+    ];
 
     # Agente de autenticação Polkit para sessões gráficas Wayland
     systemd.user.services.polkit-gnome-authentication-agent-1 = {
